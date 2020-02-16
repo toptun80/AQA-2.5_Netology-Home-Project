@@ -205,6 +205,12 @@ public class PatternsTest {
         phoneField.setValue(tooLongPhone);
         Matcher phoneMatcher = phonePattern.matcher(phoneField.getAttribute("value"));
         Assertions.assertTrue(phoneMatcher.matches());
+        phoneField.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+        String phoneWithChars = fakeValuesService.regexify("\\d{1}\\D{3}\\%\\d{5}");
+        Pattern phoneWithoutCharsPattern = Pattern.compile("\\+\\d\\s\\d{3}\\s\\d{2}");
+        phoneField.setValue(phoneWithChars);
+        Matcher phoneWithoutCharsMatcher = phoneWithoutCharsPattern.matcher(phoneField.getAttribute("value"));
+        Assertions.assertTrue(phoneWithoutCharsMatcher.matches());
     }
 
     @Test
